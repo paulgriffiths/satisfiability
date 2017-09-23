@@ -1,0 +1,13 @@
+{
+	"folders":
+	[
+		{
+			"follow_symlinks": true,
+			"path": ".",
+			"file_exclude_patterns": ["*.d", "*.o", "satisfy"]
+		}
+	],
+
+	"translate_tabs_to_spaces": true,
+    "trim_trailing_white_space_on_save": true
+}

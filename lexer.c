@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include "lexer.h"
+#include "token.h"
+#include "helpers.h"
 
 static struct token * make_new_token(const enum token_type type,
                                      const int value)
@@ -28,6 +30,30 @@ static struct token * make_new_token(const enum token_type type,
     return new_token;
 }
 
+struct token * copy_token(struct token * token) 
+{
+    struct token * new_token = malloc(sizeof *new_token);
+    if ( new_token == NULL ) {
+        perror("couldn't allocate memory for token");
+        exit(EXIT_FAILURE);
+    }
+
+    new_token->type = token->type;
+    new_token->next = NULL;
+
+    if ( token->type == TOKEN_ID ) {
+        new_token->value.name = token->value.name;
+    }
+    else if ( token->type == TOKEN_OP ) {
+        new_token->value.type = token->value.type;
+    }
+    else {
+        new_token->value.type = 0;
+    }
+
+    return new_token;
+}
+
 void free_tokens(struct token * token)
 {
     struct token * current = token;
@@ -37,16 +63,6 @@ void free_tokens(struct token * token)
         free(current);
         current = next;
     }
-}
-
-static void print_input_indicator(const char * input, const size_t index)
-{
-    static const char * prefix = ": ";
-    printf("%s%s\n%s", prefix, input, prefix);
-    for ( size_t i = 0; i < index; ++i ) {
-        putchar (' ');
-    }
-    printf("^\n");
 }
 
 struct token * tokenize(const char * input)
@@ -103,6 +119,8 @@ struct token * tokenize(const char * input)
             return NULL;
         }
 
+        new_token->input_index = index;
+        
         if ( head == NULL ) {
             head = tail = new_token;
         }
@@ -165,4 +183,3 @@ void print_tokens(struct token * token)
 
     printf("%d tokens in total.\n", num_tokens);
 }
-
