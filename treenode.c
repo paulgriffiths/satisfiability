@@ -39,33 +39,33 @@ void tree_destroy(struct treenode * node)
 void tree_print(struct treenode * node)
 {
 	if ( node ) {
-		if ( node->token->type == TOKEN_ID ) {
-			printf("%c", node->token->value.name);
+		struct token * token = node->token;
+
+		if ( token_is_id(token) ) {
+			printf("%c", token->value.name);
 		}
-		else if ( node->token->type == TOKEN_OP ) {
+		else if ( token_is_operator(token) ) {
 			printf("(");
-			switch ( node->token->value.type ) {
-				case OP_NOT:
-					printf("~");
-					tree_print(node->right);
-					break;
 
-				case OP_AND:
-					tree_print(node->left);
-					printf("&");
-					tree_print(node->right);
-					break;
-
-				case OP_OR:
-					tree_print(node->left);
-					printf("|");
-					tree_print(node->right);
-					break;
-				
-				default:
-					fprintf(stderr, "Error: unexpected operator in tree\n");
-					exit(EXIT_FAILURE);
+			if ( token_is_not(token) ) {
+				printf("~");
+				tree_print(node->right);
 			}
+			else if ( token_is_and(token) ) {
+				tree_print(node->left);
+				printf("&");
+				tree_print(node->right);
+			}
+			else if ( token_is_or(token) ) {
+				tree_print(node->left);
+				printf("|");
+				tree_print(node->right);
+			}
+			else {
+				fprintf(stderr, "Error: unexpected operator in tree\n");
+				exit(EXIT_FAILURE);
+			}
+
 			printf(")");
 		}
 		else {
@@ -74,3 +74,39 @@ void tree_print(struct treenode * node)
 		}
 	}
 }
+
+void tree_detailed_print(struct treenode * node)
+{
+	if ( node ) {
+		struct token * token = node->token;
+
+		if ( token_is_id(token) ) {
+			printf("Identifier, '%c'\n", node->token->value.name);
+		}
+		else if ( token_is_operator(token) ) {
+			if ( token_is_not(token) ) {
+				printf("Operator, NOT\n");
+				tree_detailed_print(node->right);
+			}
+			else if ( token_is_and(token) ) {
+				tree_detailed_print(node->left);
+				printf("Operator, AND\n");
+				tree_detailed_print(node->right);
+			}
+			else if ( token_is_or(token) ) {
+				tree_detailed_print(node->left);
+				printf("Operator, OR\n");
+				tree_detailed_print(node->right);
+			}
+			else {
+				fprintf(stderr, "Error: unexpected operator in tree\n");
+				exit(EXIT_FAILURE);
+			}
+		}
+		else {
+			fprintf(stderr, "\nError: unexpected token in tree\n");
+			exit(EXIT_FAILURE);
+		}
+	}
+}
+

@@ -16,5 +16,6 @@ struct treenode * treenode_create(struct token * token,
 								  struct treenode * right);
 void tree_destroy(struct treenode * node);
 void tree_print(struct treenode * node);
+void tree_detailed_print(struct treenode * node);
 
 #endif  /*  SATISFIABILITY_TREENODE_H  */

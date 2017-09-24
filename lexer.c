@@ -9,7 +9,7 @@ static struct token * make_new_token(const enum token_type type,
                                      const int value)
 {
     struct token * new_token = malloc(sizeof *new_token);
-    if ( new_token == NULL ) {
+    if ( !new_token ) {
         perror("couldn't allocate memory for token");
         exit(EXIT_FAILURE);
     }
@@ -41,10 +41,10 @@ struct token * copy_token(struct token * token)
     new_token->type = token->type;
     new_token->next = NULL;
 
-    if ( token->type == TOKEN_ID ) {
+    if ( token_is_id(token) ) {
         new_token->value.name = token->value.name;
     }
-    else if ( token->type == TOKEN_OP ) {
+    else if ( token_is_operator(token) ) {
         new_token->value.type = token->value.type;
     }
     else {
@@ -56,12 +56,10 @@ struct token * copy_token(struct token * token)
 
 void free_tokens(struct token * token)
 {
-    struct token * current = token;
-
-    while ( current ) {
-        struct token * next = current->next;
-        free(current);
-        current = next;
+    while ( token ) {
+        struct token * next = token->next;
+        free(token);
+        token = next;
     }
 }
 
@@ -131,55 +129,4 @@ struct token * tokenize(const char * input)
     }
 
     return head;
-}
-
-void print_tokens(struct token * token)
-{
-    int num_tokens = 0;
-
-    while ( token ) {
-        switch ( token->type ) {
-            case TOKEN_ID:
-                printf("Token: identifier '%c'\n", token->value.name);
-                break;
-
-            case TOKEN_LPAREN:
-                printf("Token: opening parenthesis\n");
-                break;
-
-            case TOKEN_RPAREN:
-                printf("Token: closing parenthesis\n");
-                break;
-
-            case TOKEN_OP:
-                printf("Token: ");
-                switch ( token->value.type ) {
-                    case OP_AND:
-                        printf("AND operator\n");
-                        break;
-
-                    case OP_OR:
-                        printf("OR operator\n");
-                        break;
-
-                    case OP_NOT:
-                        printf("NOT operator\n");
-                        break;
-
-                    default:
-                        printf("Unrecognized operator!\n");
-                        exit(EXIT_FAILURE);
-                }
-                break;
-
-            default:
-                printf("Unrecognized token!\n");
-                exit(EXIT_FAILURE);
-        }
-
-        token = token->next;
-        ++num_tokens;
-    }
-
-    printf("%d tokens in total.\n", num_tokens);
 }
