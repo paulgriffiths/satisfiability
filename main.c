@@ -23,7 +23,7 @@ int main(void)
         reset_symbols(&table);
         struct treenode * tree = get_expr(tokens, &next, &table);
 
-        if ( tree ) {
+        if ( tree && next == NULL ) {
             printf("%s\n", table.names);
             for ( int i = 0; i < table.count; ++i ) {
                 putchar('=');
@@ -38,8 +38,11 @@ int main(void)
             }
             tree_destroy(tree);
         }
-        else { 
-            size_t index = next ? next->input_index : strlen(buffer);
+        else {
+            if ( tree ) {
+                fprintf(stderr, "Error: extraneous input / missing operator\n"); 
+            }
+            size_t index = next ? next->input_index - 1 : strlen(buffer);
             print_input_indicator(buffer, index);
         }
 

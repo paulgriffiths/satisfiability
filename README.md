@@ -18,21 +18,27 @@ calculus. Sample output:
 	TTT: true
 	Formula is satisfiable
 	paul@horus:~/git/satisfiability$ ./satisfy
-	> a & ~a
-	a
+	> w & ~w
+	w
 	=
 	F: false
 	T: false
 	Formula is not satisfiable
-	paul@horus:~/git/satisfiability$ 
-
-Sample output with badly formed input:
-
 	paul@horus:~/git/satisfiability$ ./satisfy
-	> a & b |
+	> x & y z
+	Error: extraneous input / missing operator
+	: x & y z
+	:       ^
+	paul@horus:~/git/satisfiability$ ./satisfy
+	> i | j &
 	Error: missing factor
-	: a & b |
+	: i | j &
 	:        ^
+	paul@horus:~/git/satisfiability$ ./satisfy
+	> &s
+	Error: missing factor
+	: &s
+	: ^
 	paul@horus:~/git/satisfiability$ 
 
 Single letters only may be used as variable names.
