@@ -2,9 +2,31 @@ satisfiability
 ==============
 
 This program solves the satisfiability problem of formulae in the propositional
-calculus, e.g.
+calculus. Sample output:
 
-`a & (b | ~c)`
+	paul@horus:~/git/satisfiability$ ./satisfy
+	> p & (q | ~r)
+	pqr
+	===
+	FFF: false
+	FFT: false
+	FTF: false
+	FTT: false
+	TFF: true
+	TFT: false
+	TTF: true
+	TTT: true
+	Formula is satisfiable
+	paul@horus:~/git/satisfiability$ 
+
+Sample output with badly formed input:
+
+	paul@horus:~/git/satisfiability$ ./satisfy
+	> a & b |
+	Error: missing factor
+	: a & b |
+	:        ^
+	paul@horus:~/git/satisfiability$ 
 
 Single letters only may be used as variable names.
 
