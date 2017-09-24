@@ -17,6 +17,13 @@ calculus. Sample output:
 	TTF: true
 	TTT: true
 	Formula is satisfiable
+	paul@horus:~/git/satisfiability$ ./satisfy
+	> a & ~a
+	a
+	=
+	F: false
+	T: false
+	Formula is not satisfiable
 	paul@horus:~/git/satisfiability$ 
 
 Sample output with badly formed input:
