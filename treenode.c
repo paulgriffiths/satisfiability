@@ -7,7 +7,7 @@ struct treenode * treenode_create(struct token * token,
 								  struct treenode * right)
 {
 	struct treenode * new_node = malloc(sizeof *new_node);
-	if ( new_node == NULL ) {
+	if ( !new_node ) {
 		perror("couldn't allocate memory for treenode");
 		exit(EXIT_FAILURE);
 	}
@@ -19,20 +19,13 @@ struct treenode * treenode_create(struct token * token,
 	return new_node;
 }
 
-static void treenode_destroy(struct treenode * node)
-{
-	if ( node ) {
-		free(node->token);
-		free(node);
-	}
-}
-
 void tree_destroy(struct treenode * node)
 {
 	if ( node ) {
 		tree_destroy(node->left);
 		tree_destroy(node->right);
-		treenode_destroy(node);
+		free(node->token);
+		free(node);
 	}
 }
 
@@ -42,7 +35,7 @@ void tree_print(struct treenode * node)
 		struct token * token = node->token;
 
 		if ( token_is_id(token) ) {
-			printf("%c", token->value.name);
+			printf("%c", token->value);
 		}
 		else if ( token_is_operator(token) ) {
 			printf("(");
@@ -62,7 +55,7 @@ void tree_print(struct treenode * node)
 				tree_print(node->right);
 			}
 			else {
-				fprintf(stderr, "Error: unexpected operator in tree\n");
+				fprintf(stderr, "\nError: unexpected operator in tree\n");
 				exit(EXIT_FAILURE);
 			}
 
@@ -74,39 +67,3 @@ void tree_print(struct treenode * node)
 		}
 	}
 }
-
-void tree_detailed_print(struct treenode * node)
-{
-	if ( node ) {
-		struct token * token = node->token;
-
-		if ( token_is_id(token) ) {
-			printf("Identifier, '%c'\n", node->token->value.name);
-		}
-		else if ( token_is_operator(token) ) {
-			if ( token_is_not(token) ) {
-				printf("Operator, NOT\n");
-				tree_detailed_print(node->right);
-			}
-			else if ( token_is_and(token) ) {
-				tree_detailed_print(node->left);
-				printf("Operator, AND\n");
-				tree_detailed_print(node->right);
-			}
-			else if ( token_is_or(token) ) {
-				tree_detailed_print(node->left);
-				printf("Operator, OR\n");
-				tree_detailed_print(node->right);
-			}
-			else {
-				fprintf(stderr, "Error: unexpected operator in tree\n");
-				exit(EXIT_FAILURE);
-			}
-		}
-		else {
-			fprintf(stderr, "\nError: unexpected token in tree\n");
-			exit(EXIT_FAILURE);
-		}
-	}
-}
-

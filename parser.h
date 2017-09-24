@@ -7,7 +7,7 @@
 
 struct treenode * get_expr(struct token * in, struct token ** out, struct symbols * table);
 struct treenode * get_term(struct token * in, struct token ** out, struct symbols * table);
-struct treenode * get_element(struct token * in, struct token ** out, struct symbols * table);
-struct treenode * get_factor(struct token * in, struct token ** out, struct symbols * table);
+struct treenode * get_elem(struct token * in, struct token ** out, struct symbols * table);
+struct treenode * get_fact(struct token * in, struct token ** out, struct symbols * table);
 
 #endif  /*  SATISFIABILITY_PARSER_H  */

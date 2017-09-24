@@ -6,11 +6,9 @@
 #include "parser.h"
 #include "helpers.h"
 #include "symbols.h"
-#include "evaluate.h"
+#include "satisfy.h"
 
 #define BUFFER_SIZE 80
-
-void satisfy(struct treenode * tree, struct symbols * table, int offset);
 
 int main(void)
 {
@@ -26,28 +24,22 @@ int main(void)
         struct treenode * tree = get_expr(tokens, &next, &table);
 
         if ( tree ) {
-            printf("Tree representation: ");
-            tree_print(tree);
-            printf("\n");
-            
             printf("%s\n", table.names);
             for ( int i = 0; i < table.count; ++i ) {
-                putchar('-');
+                putchar('=');
             }
             putchar('\n');
 
-            satisfy(tree, &table, 0);
-
+            if ( satisfy(tree, &table) ) {
+                printf("Formula is satisfiable\n");
+            }
+            else {
+                printf("Formula is not satisfiable\n");
+            }
             tree_destroy(tree);
         }
         else { 
-            size_t index;
-            if ( next ) {
-                index = next->input_index;
-            }
-            else {
-                index = strlen(buffer);
-            }
+            size_t index = next ? next->input_index : strlen(buffer);
             print_input_indicator(buffer, index);
         }
 
@@ -55,22 +47,4 @@ int main(void)
     }
 
     return 0;
-}
-
-void satisfy(struct treenode * tree, struct symbols * table, int offset)
-{
-    if ( offset == table->count ) {
-        printf("%s: %s\n", table->contents, bool_string(evaluate(tree, table)));
-    }
-    else {
-        for ( int state = 0; state < 2; ++state ) {
-            if ( state == 0 ) {
-                set_symbol_value(table, table->names[offset], false);
-            }
-            else {
-                set_symbol_value(table, table->names[offset], true);
-            }
-            satisfy(tree, table, offset + 1);
-        }
-    }
 }

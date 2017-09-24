@@ -1,11 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "evaluate.h"
+#include "token.h"
 
 bool evaluate(struct treenode * tree, struct symbols * table)
 {
 	if ( token_is_id(tree->token) ) {
-		return get_symbol_value(table, tree->token->value.name);
+		return get_symbol_value(table, tree->token->value);
 	}
 	else if ( token_is_not(tree->token) ) {
 		return !evaluate(tree->right, table);

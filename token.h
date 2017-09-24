@@ -19,13 +19,15 @@ enum operator_type {
 
 struct token {
     enum token_type type;
-    union {
-        char name;
-        enum operator_type type;
-    } value;
+    int value;
     size_t input_index;
     struct token * next;
 };
+
+struct token * make_new_token(const enum token_type type,
+                              const int value);
+struct token * copy_token(struct token * token);
+void free_tokens(struct token * token);
 
 bool token_is_id(struct token * token);
 bool token_is_operator(struct token * token);

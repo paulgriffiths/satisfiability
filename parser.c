@@ -5,9 +5,9 @@
 #include "token.h"
 #include "treenode.h"
 
-struct treenode * get_factor(struct token * in,
-							 struct token ** out,
-							 struct symbols * table)
+struct treenode * get_fact(struct token * in,
+					       struct token ** out,
+						   struct symbols * table)
 {
 	struct token * next = in;
 	struct treenode * node = NULL;
@@ -15,7 +15,7 @@ struct treenode * get_factor(struct token * in,
 	if ( token_is_id(in) ) {
 		node = treenode_create(in, NULL, NULL);
 		next = in->next;
-		set_symbol_value(table, in->value.name, false);
+		set_symbol_value(table, in->value, false);
 	}
 	else if ( token_is_lparen(in) ) {
 		node = get_expr(in->next, &next, table);
@@ -25,7 +25,7 @@ struct treenode * get_factor(struct token * in,
 		else {
 			tree_destroy(node);
 			node = NULL;
-			fprintf(stderr, "Error: missing closing parenthesis.\n");
+			fprintf(stderr, "Error: missing closing parenthesis\n");
 		}
 	}
 	else {
@@ -36,23 +36,23 @@ struct treenode * get_factor(struct token * in,
 	return node;
 }
 
-struct treenode * get_element(struct token * in,
-							  struct token ** out,
-							  struct symbols * table)
+struct treenode * get_elem(struct token * in,
+						   struct token ** out,
+						   struct symbols * table)
 {
 	struct token * next = in;
 	struct treenode * node = NULL;
 	struct treenode * second = NULL;
 
 	if ( token_is_not(in) ) {
-		second = get_factor(in->next, &next, table);
+		second = get_fact(in->next, &next, table);
 		if ( second ) {
 			node = treenode_create(in, NULL, second);
 			next = in->next->next;
 		}
 	}
 	else {
-		node = get_factor(in, &next, table);
+		node = get_fact(in, &next, table);
 	}
 
     *out = next;
@@ -67,11 +67,11 @@ struct treenode * get_term(struct token * in,
 	struct treenode * node = NULL;
 	struct treenode * second = NULL;
 
-	if ( (node = get_element(in, &next, table)) ) {
+	if ( (node = get_elem(in, &next, table)) ) {
 		while ( token_is_and(next) ) {
 			struct token * op_node = next;
 
-			if ( (second = get_element(next->next, &next, table)) ) {
+			if ( (second = get_elem(next->next, &next, table)) ) {
 				node = treenode_create(op_node, node, second);
 			}
 			else {
