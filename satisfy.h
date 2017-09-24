@@ -6,4 +6,4 @@
 
 bool satisfy(struct treenode * tree, struct symbols * table);
 
-#endif	/*  SATISFIABILITY_SATISFY_H  */
+#endif  /*  SATISFIABILITY_SATISFY_H  */

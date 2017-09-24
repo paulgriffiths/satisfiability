@@ -5,14 +5,14 @@
 #include "token.h"
 
 struct treenode {
-	struct token * token;
-	struct treenode * left;
-	struct treenode * right;
+    struct token * token;
+    struct treenode * left;
+    struct treenode * right;
 };
 
 struct treenode * treenode_create(struct token * token,
-								  struct treenode * left,
-								  struct treenode * right);
+                                  struct treenode * left,
+                                  struct treenode * right);
 void tree_destroy(struct treenode * node);
 void tree_print(struct treenode * node);
 

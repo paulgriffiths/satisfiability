@@ -36,70 +36,70 @@ void free_tokens(struct token * token)
 
 bool token_is_id(struct token * token)
 {
-	if ( token ) {
-		return token->type == TOKEN_ID;
-	}
-	else {
-		return false;
-	}
+    if ( token ) {
+        return token->type == TOKEN_ID;
+    }
+    else {
+        return false;
+    }
 }
 
 bool token_is_operator(struct token * token)
 {
-	if ( token ) {
-		return token->type == TOKEN_OP;
-	}
-	else {
-		return false;
-	}
+    if ( token ) {
+        return token->type == TOKEN_OP;
+    }
+    else {
+        return false;
+    }
 }
 
 bool token_is_not(struct token * token)
 {
-	if ( token ) {
-		return (token->type == TOKEN_OP) && (token->value == OP_NOT);
-	}
-	else {
-		return false;
-	}
+    if ( token ) {
+        return (token->type == TOKEN_OP) && (token->value == OP_NOT);
+    }
+    else {
+        return false;
+    }
 }
 
 bool token_is_and(struct token * token)
 {
-	if ( token ) {
-		return (token->type == TOKEN_OP) && (token->value == OP_AND);
-	}
-	else {
-		return false;
-	}
+    if ( token ) {
+        return (token->type == TOKEN_OP) && (token->value == OP_AND);
+    }
+    else {
+        return false;
+    }
 }
 
 bool token_is_or(struct token * token)
 {
-	if ( token ) {
-		return (token->type == TOKEN_OP) && (token->value == OP_OR);
-	}
-	else {
-		return false;
-	}
+    if ( token ) {
+        return (token->type == TOKEN_OP) && (token->value == OP_OR);
+    }
+    else {
+        return false;
+    }
 }
 
 bool token_is_lparen(struct token * token)
 {
-	if ( token ) {
-		return token->type == TOKEN_LPAREN;
-	}
-	else {
-		return false;
-	}
+    if ( token ) {
+        return token->type == TOKEN_LPAREN;
+    }
+    else {
+        return false;
+    }
 }
 
 bool token_is_rparen(struct token * token)
 {
-	if ( token ) {
-		return token->type == TOKEN_RPAREN;
-	}
-	else {
-		return false;
-	}
+    if ( token ) {
+        return token->type == TOKEN_RPAREN;
+    }
+    else {
+        return false;
+    }
 }

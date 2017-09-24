@@ -7,4 +7,4 @@
 
 bool evaluate(struct treenode * tree, struct symbols * table);
 
-#endif	/*  SATISFIABILITY_EVALUATE_H  */
+#endif  /*  SATISFIABILITY_EVALUATE_H  */

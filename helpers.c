@@ -13,5 +13,5 @@ void print_input_indicator(const char * input, const size_t index)
 
 const char * bool_string(const bool value)
 {
-	return value ? "true" : "false";
+    return value ? "true" : "false";
 }
