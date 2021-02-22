@@ -1,13 +1,33 @@
+/*  SATISY, a solver of the satisfiability problem of formulae in the
+ *  propositional calculus.
+ *  Copyright (C) 2017-present Paul Griffiths.
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 3, or (at your option)
+ *  any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+
 #include "parser.h"
 #include "token.h"
 #include "treenode.h"
 
-struct treenode * get_fact(struct token * in,
-                           struct token ** out,
-                           struct symbols * table)
+struct treenode *
+get_fact(struct token * in,
+         struct token ** out,
+         struct symbols * table)
 {
     struct token * next = in;
     struct treenode * node = NULL;
@@ -36,9 +56,10 @@ struct treenode * get_fact(struct token * in,
     return node;
 }
 
-struct treenode * get_elem(struct token * in,
-                           struct token ** out,
-                           struct symbols * table)
+struct treenode *
+get_elem(struct token * in,
+         struct token ** out,
+         struct symbols * table)
 {
     struct token * next = in;
     struct treenode * node = NULL;
@@ -59,9 +80,10 @@ struct treenode * get_elem(struct token * in,
     return node;
 }
 
-struct treenode * get_term(struct token * in,
-                           struct token ** out,
-                           struct symbols * table)
+struct treenode *
+get_term(struct token * in,
+         struct token ** out,
+         struct symbols * table)
 {
     struct token * next = in;
     struct treenode * node = NULL;
@@ -85,9 +107,10 @@ struct treenode * get_term(struct token * in,
     return node;
 }
 
-struct treenode * get_expr(struct token * in,
-                           struct token ** out,
-                           struct symbols * table)
+struct treenode *
+get_expr(struct token * in,
+         struct token ** out,
+         struct symbols * table)
 {
     struct token * next = in;
     struct treenode * node = NULL;

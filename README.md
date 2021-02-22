@@ -1,8 +1,26 @@
-satisfiability
-==============
+# satisfiability
 
 This program solves the satisfiability problem of formulae in the propositional
-calculus. Sample output:
+calculus.
+
+This program is an exercise in expression evaluation generally, and the
+construction of parse trees specifically.
+
+## Building and installation
+
+To build from a tarball, extract it and run:
+
+    ./configure && make
+    sudo make install
+
+To build from a clone of the repository, run:
+
+    autoreconf --install
+    ./configure && make
+
+## Usage
+
+Sample output:
 
 	paul@horus:~/git/satisfiability$ ./satisfy
 	> p & (q | ~r)
@@ -42,6 +60,3 @@ calculus. Sample output:
 	paul@horus:~/git/satisfiability$ 
 
 Single letters only may be used as variable names.
-
-This program is an exercise in expression evaluation generally, and the
-construction of parse trees specifically.
